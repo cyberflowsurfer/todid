@@ -1,0 +1,12 @@
+1) http://technpol.wordpress.com/2013/11/09/installing-rails-4-without-breaking-rails-3/
+
+bundle install
+git init
+rails g scaffold goal name:string category:string description:text
+rake db:migrate
+
+sqlite3 db/development.sqlite3
+insert into goals values (1, 'Learn Rails4 with AspectJ', 'personal','I want to leverage JavaScript client technologies with Rails', '2014-08-28', '2014-08-28');
+insert into goals values (2, 'Learn Nutanix', 'work','I want to learn about the Nutanix hyperconverged appliance', '2014-08-28', '2014-08-28');
+
+.quit
