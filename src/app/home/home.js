@@ -12,7 +12,7 @@
  * The dependencies block here is also where component dependencies should be
  * specified, as shown below.
  */
-angular.module( 'ngBoilerplate.home', [
+angular.module( 'todid.home', [
   'ui.state',
   'plusOne'
 ])
@@ -42,4 +42,3 @@ angular.module( 'ngBoilerplate.home', [
 })
 
 ;
-

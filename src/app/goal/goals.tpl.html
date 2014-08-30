@@ -1,0 +1,25 @@
+<div>
+  <h1>Goals</h1>
+  <blockquote>
+    Setting goals is the first step in turning the invisible into the visible.
+    <footer>
+      -<cite>Tony Robbins</cite>
+    </footer>
+  </blockquote>
+
+</div>
+
+<div>
+  <table>
+    <thead>
+      <td>Name</td>
+      <td>Category</td>
+      <td>Description</td>
+    </thead>
+    <tr  ng-repeat="goal in goals">
+      <td>{{goal.name}}</td>
+      <td>{{goal.category}}</td>
+      <td>{{goal.description}}</td>
+    </tr>
+  </table>
+</div>

@@ -18,3 +18,26 @@ insert into tasks values (2, 1, 'Complete Rails/AngularJs tutorial', 'learn','se
 insert into tasks values (3, 2, 'Watch technical architecture video', 'learn','self', '', 0, '2014-08-26', '2014-08-28', '2014-08-28');
 .quit
 
+git remote add ngboilerplate git://github.com/joshdmiller/ng-boilerplate.git
+git fetch ngboilerplate
+git merge --squash ngboilerplate/v0.3.1-release
+git commit -m "Merged boilerplate"
+
+Resolve .gitignore conflicts
+
+sudo npm -g install grunt-cli karma bower
+sudo npm install
+
+bower install
+
+We’ll edit build.config.js, changing the following line:
+
+  compile_dir: 'angular_bin',
+
+grunt build
+
+cd public
+ln -s ../build UI
+
+bower install angular-resource --save-dev
+
