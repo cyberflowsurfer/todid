@@ -1,0 +1,30 @@
+<div class="body">
+  <div class="form-horizontal">
+
+    <div class="control-group">
+      <label class="control-label">Goal name:</label>
+      <div class="controls">
+        <input type="text" autofocus ng-model="goal.name" />
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">Category</label>
+      <div class="controls">
+        <input type="text" ng-model="goal.category" />
+      </div>
+    </div>
+
+   <div class="control-group">
+      <label class="control-label">Description</label>
+      <div class="controls">
+        <input type="textarea" ng-model="goal.description" />
+      </div>
+    </div>
+
+    <div class="controls">
+      <button ng-click="submit()" class="btn btn-primary" >Save</button>
+      <button ng-click="cancel()" class="btn btn-primary" >Cancel</button>
+    </div>
+  </div>
+</div>

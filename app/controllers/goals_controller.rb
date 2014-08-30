@@ -8,13 +8,13 @@ class GoalsController < ApplicationController
   # GET /goals.json
   def index
     @goals = Goal.all
-    render json: @goals
+    render_safe_json @goals
   end
 
   # GET /goals/1
   # GET /goals/1.json
   def show
-    render json: @goal
+    render_safe_json @goal
   end
 
   # GET /goals/new
@@ -32,9 +32,9 @@ class GoalsController < ApplicationController
     @goal = Goal.new(goal_params)
 
     if @goal.save
-      format.json { render :show, status: :created, location: @goal }
+      render_safe_json @gaol, {status: :created}
     else
-      format.json { render json: @goal.errors, status: :unprocessable_entity }
+      render_safe_json @goal.errors, {status: :unprocessable_entity }
     end
   end
 
@@ -42,9 +42,9 @@ class GoalsController < ApplicationController
   # PATCH/PUT /goals/1.json
   def update
     if @goal.update(goal_params)
-      format.json { render :show, status: :ok, location: @goal }
+      render_safe_json @gaol
     else
-      format.json { render json: @goal.errors, status: :unprocessable_entity }
+      render_safe_json @gaol
     end
   end
 

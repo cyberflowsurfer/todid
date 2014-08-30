@@ -6,20 +6,9 @@
       -<cite>Tony Robbins</cite>
     </footer>
   </blockquote>
-
 </div>
 
 <div>
-  <table>
-    <thead>
-      <td>Name</td>
-      <td>Category</td>
-      <td>Description</td>
-    </thead>
-    <tr  ng-repeat="goal in goals">
-      <td>{{goal.name}}</td>
-      <td>{{goal.category}}</td>
-      <td>{{goal.description}}</td>
-    </tr>
-  </table>
+  <div class='gridStyle' id="grid" ng-grid="gridOptions"></div>
+  <button ng-click="newGoal()" class="btn btn-primary" >New</button>
 </div>

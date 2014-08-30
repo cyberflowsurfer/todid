@@ -41,3 +41,5 @@ ln -s ../build UI
 
 bower install angular-resource --save-dev
 
+sudo npm install -g protractor
+
