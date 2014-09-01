@@ -1,37 +1,30 @@
 <div class="body">
-  <div class="form-horizontal">
-
-   <div ng-show="error">
-    <p>Error: {{error.data}}</p>
+  <div ng-show="error">
+    <p>Error: {{error}}</p>
   </div>
 
-    <div class="control-group" ng-class="error.name ? 'error' : ''">
-      <label class="control-label">Goal name:</label>
-      <div class="controls">
-        <input type="text" autofocus ng-model="goal.name" />
-      </div>
-      <div field_error errors="error" field="name"></div>
+  <form name="goalForm" ng-submit="submitForm(goalForm.$valid)" novalidate>
+    <div class="form-group" ng-class="{ 'has-error' : goalForm.name.$invalid && !goalForm.name.$pristine }">
+        <label>Goal Name</label>
+        <input type="text" autofocus name="name" class="form-control" ng-model="goal.name">
+        <p ng-show="goalForm.name.$invalid && !goalForm.name.$pristine" class="help-block">Name is required.</p>
+        <div field_error errors="error" field="name"></div>
     </div>
 
-    <div class="control-group" ng-class="error.category ? 'error' : ''">
-      <label class="control-label">Category</label>
-      <div class="controls">
-        <input type="text" ng-model="goal.category" />
-      </div>
-      <div field_error errors="error" field="category"></div>
+    <div class="form-group" ng-class="{ 'has-error' : goalForm.category.$invalid && !goalForm.category.$pristine }">
+        <label>Category</label>
+        <input type="text" name="category" class="form-control" ng-model="goal.category" required>
     </div>
 
-   <div class="control-group" ng-class="error.description ? 'error' : ''">
-      <label class="control-label">Description</label>
-      <div class="controls">
-        <input type="textarea" ng-model="goal.description" />
-      </div>
-      <div field_error errors="error" field="description"></div>
+    <div class="form-group" ng-class="{ 'has-error' : goalForm.description.$invalid && !goalForm.description.$pristine }">
+        <label>Description</label>
+        <input type="text" name="description" class="form-control" ng-model="goal.description" required>
     </div>
 
     <div class="controls">
-      <button ng-click="submit()" class="btn btn-primary" >Save</button>
-      <button ng-click="cancel()" class="btn btn-primary" >Cancel</button>
+      <button ng-click="submit()" class="btn btn-primary" ng-disabled="goalForm.$invalid">Save</button>
+      <button ng-click="cancel()" class="btn btn-danger" >Cancel</button>
     </div>
-  </div>
-</div>
+
+  </form>
+

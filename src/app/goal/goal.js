@@ -66,12 +66,7 @@ angular.module('todid.goal', [
 
 .controller('GoalCtrl', function GoalController( $scope, GoalRes, $state, $stateParams ) {
   $scope.goalId = parseInt($stateParams.goalId, 10);
-
-  if ($scope.goalId) {
-    $scope.goal = GoalRes.get({id: $scope.goalId});
-  } else {
-    $scope.goal = new GoalRes();
-  }
+  $scope.goal   = $scope.goalId ? GoalRes.get({id: $scope.goalId}) : new GoalRes();
 
   $scope.submit = function() {
     if ($scope.goalId) {
