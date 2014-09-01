@@ -17,7 +17,9 @@ class ApplicationController < ActionController::Base
 
   # See: http://technpol.wordpress.com/2013/09/28/json-jsonp-xss-vulnerability-with-angularjs-and-rails/
   def render_safe_json(object, parameters = {})
-    render parameters.merge(content_type: 'application/json', text: ")]}',\n" + object.to_json)
+    result = parameters.merge(content_type: 'application/json', text: ")]}',\n" + object.to_json)
+    logger.debug result
+    render result
   end
 
 protected

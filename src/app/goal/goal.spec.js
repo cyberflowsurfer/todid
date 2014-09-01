@@ -60,7 +60,7 @@ describe( 'Goal functionality', function() {
     });
 
     describe('Other controller methods', function(){
-      it('Calls edit on first row', function() {
+      it('calls edit on a resource', function() {
         // we expect it to call $state
         spyOn(scope.$state, "transitionTo").andCallThrough();
 
@@ -69,6 +69,23 @@ describe( 'Goal functionality', function() {
 
         // we expect the goal state to be called, passing in the id of the first item
         expect(scope.$state.transitionTo).toHaveBeenCalledWith(unitTest.resource, { goalId: 1});
+      });
+
+      it('Calls delete resource; success', function() {
+        var rsrcId = 0;
+        response = new Array(unitTest.resources.length - 1);
+        for (var i = 0; i < unitTest.resources.length; i++) {
+          if (unitTest.resources[i].id != i) {
+            response.push(unitTest.resources[i]);
+          }
+        }
+        scope.httpBackend.expect('DELETE', unitTest.url_base + '/' + rsrcId + '.json').respond();
+        scope.httpBackend.expect('GET', unitTest.url_index).respond(response);
+
+        scope.deleteGoal(scope.goals[rsrcId]);
+
+        scope.$digest();
+        scope.httpBackend.flush();
       });
 
       it('Calls new', function() {
@@ -94,15 +111,15 @@ describe( 'Goal functionality', function() {
 
     describe( 'Resource detail controller base tests:', function() {
       it('Initial detail controller render receives a goal id, gets goal, success', angular.mock.inject(function($controller){
-        var resourceId = parseInt(scope.fakeStateParams.goalId, 10);
+        var rsrcId = parseInt(scope.fakeStateParams.goalId, 10);
         $controller(unitTest.detailCtrl, { $scope: scope, $stateParams: scope.fakeStateParams });
-        expect(scope.goalId).toEqual(resourceId);
+        expect(scope.goalId).toEqual(rsrcId);
 
-        scope.httpBackend.expectGET(unitTest.url_base + '/' + resourceId + '.json').respond(unitTest.resources[2]);
+        scope.httpBackend.expectGET(unitTest.url_base + '/' + rsrcId + '.json').respond(unitTest.resources[2]);
 
         scope.$digest();
         scope.httpBackend.flush();
-        expect(scope.goal.name).toEqual(unitTest.resources[resourceId].name);
+        expect(scope.goal.name).toEqual(unitTest.resources[rsrcId].name);
       }));
 
       it('Initial detail controller render does not receive a goal id, creates new goal, success', angular.mock.inject(function( $controller) {
@@ -115,27 +132,40 @@ describe( 'Goal functionality', function() {
     });
 
     describe( 'Resource detail controller update method tests', function() {
-      resourceId = 2;
+      var rsrcId = 2;
 
       beforeEach(angular.mock.inject(function($controller){
         $controller(unitTest.detailCtrl, {$scope: scope, $stateParams: scope.fakeStateParams});
 
         // The initial render triggers a get, drain that before we start the test proper
-        scope.httpBackend.expectGET('../goals/2.json').respond(unitTest.resources[resourceId]);
+        scope.httpBackend.expectGET(unitTest.url_base +'/' + rsrcId + '.json').respond(unitTest.resources[rsrcId]);
         scope.$digest();
         scope.httpBackend.flush();
        }));
 
-      it('Submit with goaId calls put on server, put succeeds', function(){
+      it('Submit with goalId calls put on server, put succeeds', function(){
         spyOn(scope.$state, "transitionTo").andCallThrough();
 
         scope.goal.name = 'Changed name';
         scope.submit();
 
-        scope.httpBackend.expectPUT(unitTest.url_base + '/' + resourceId + '.json').respond({});
+        scope.httpBackend.expectPUT(unitTest.url_base + '/' + rsrcId + '.json').respond({});
         scope.$digest();
         scope.httpBackend.flush();
         expect(scope.$state.transitionTo).toHaveBeenCalledWith('goals');
+      });
+
+      it('put resource with illegal field value, put fails', function(){
+        spyOn(scope.$state, "transitionTo").andCallThrough();
+
+        scope.goal.name = '';
+        scope.submit();
+
+        scope.httpBackend.expectPUT(unitTest.url_base + '/' + rsrcId + '.json').respond(422, {"name":["can't be blank"]});
+        scope.$digest();
+        scope.httpBackend.flush();
+        expect(scope.$state.transitionTo).not.toHaveBeenCalledWith(unitTest.resource + 's');
+        expect(scope.error).toEqual( { name: [ "can't be blank" ] });
       });
     });
 
@@ -155,6 +185,19 @@ describe( 'Goal functionality', function() {
         scope.$digest();
         scope.httpBackend.flush();
         expect(scope.$state.transitionTo).toHaveBeenCalledWith('goals');
+      });
+
+      it('post resource with illegal field value, post fails', function(){
+        spyOn(scope.$state, "transitionTo").andCallThrough();
+
+        scope.goal.name = '';
+        scope.submit();
+
+        scope.httpBackend.expectPOST(unitTest.url_index).respond(422, {"name":["can't be blank"]});
+        scope.$digest();
+        scope.httpBackend.flush();
+        expect(scope.$state.transitionTo).not.toHaveBeenCalledWith(unitTest.resource + 's');
+        expect(scope.error).toEqual( { name: [ "can't be blank" ] });
       });
     });
   });

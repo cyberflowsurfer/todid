@@ -1,25 +1,32 @@
 <div class="body">
   <div class="form-horizontal">
 
-    <div class="control-group">
+   <div ng-show="error">
+    <p>Error: {{error.data}}</p>
+  </div>
+
+    <div class="control-group" ng-class="error.name ? 'error' : ''">
       <label class="control-label">Goal name:</label>
       <div class="controls">
         <input type="text" autofocus ng-model="goal.name" />
       </div>
+      <div field_error errors="error" field="name"></div>
     </div>
 
-    <div class="control-group">
+    <div class="control-group" ng-class="error.category ? 'error' : ''">
       <label class="control-label">Category</label>
       <div class="controls">
         <input type="text" ng-model="goal.category" />
       </div>
+      <div field_error errors="error" field="category"></div>
     </div>
 
-   <div class="control-group">
+   <div class="control-group" ng-class="error.description ? 'error' : ''">
       <label class="control-label">Description</label>
       <div class="controls">
         <input type="textarea" ng-model="goal.description" />
       </div>
+      <div field_error errors="error" field="description"></div>
     </div>
 
     <div class="controls">

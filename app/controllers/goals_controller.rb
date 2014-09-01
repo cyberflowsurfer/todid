@@ -1,5 +1,4 @@
 class GoalsController < ApplicationController
-
   layout false
   respond_to :json
   before_action :set_goal, only: [:show, :edit, :update, :destroy]
@@ -44,7 +43,7 @@ class GoalsController < ApplicationController
     if @goal.update(goal_params)
       render_safe_json @gaol
     else
-      render_safe_json @gaol
+      render_safe_json @goal.errors, {status: :unprocessable_entity }
     end
   end
 
@@ -63,6 +62,6 @@ class GoalsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def goal_params
-      params.require(:goal).permit(:name, :category, :description)
+      params[:goal].permit(:name, :category, :description)
     end
 end

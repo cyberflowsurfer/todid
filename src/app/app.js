@@ -1,6 +1,7 @@
 angular.module( 'todid', [
   'templates-app',
   'templates-common',
+  'common.errorHandling',
   'todid.home',
   'todid.about',
   'todid.goal',

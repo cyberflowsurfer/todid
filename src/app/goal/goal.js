@@ -43,16 +43,21 @@ angular.module('todid.goal', [
   $scope.gridOptions = {
     data: 'goals',
     columnDefs: [
-      {field: 'id', displayName: 'Id'},
-      {field: 'name', displayName: 'Goal'},
       {field: 'category', displayName: 'Category'},
+      {field: 'name', displayName: 'Goal'},
       {field: 'description', displayName: 'Description'},
-      {displayName: 'Edit', cellTemplate: '<button id="editBtn" type="button" class="btn-small" ng-click="editGoal(row.entity)" >Edit</button> '}
+      {displayName: 'Edit', cellTemplate: '<button id="editBtn" type="button" class="btn-small" ng-click="editGoal(row.entity)" >Edit</button> '},
+      {displayName: 'Delete', cellTemplate: '<button id="deleteBtn" type="button" class="btn-small" ng-click="deleteGoal(row.entity)" >Delete</button> '}
     ],
     multiSelect: false
   };
   $scope.editGoal = function(goal) {
     $state.transitionTo('goal', { goalId: goal.id });
+  };
+  $scope.deleteGoal = function(goal) {
+    goal.$remove();
+    $scope.goals = GoalRes.query();
+    $state.transitionTo('goals');
   };
   $scope.newGoal = function() {
     $state.transitionTo('goal');
@@ -72,11 +77,15 @@ angular.module('todid.goal', [
     if ($scope.goalId) {
       $scope.goal.$update(function(response) {
         $state.transitionTo('goals');
+      }, function(error) {
+        $scope.error = error.data;
       });
     }
     else {
       $scope.goal.$save(function(response) {
         $state.transitionTo('goals');
+      }, function(error) {
+        $scope.error = error.data;
       });
     }
   };
@@ -86,7 +95,7 @@ angular.module('todid.goal', [
   };
 })
 
-.factory('GoalRes', function ( $resource ) {
-  return $resource('../goals/:id.json', {id: '@id'}, {'update': {method:'PUT'}});
+.factory( 'GoalRes', function ( $resource )  {
+  return $resource("../goals/:id.json", {id:'@id'}, {'update': {method:'PUT'}, 'remove': {method: 'DELETE', headers: {'Content-Type': 'application/json'}}});
 })
 ;
