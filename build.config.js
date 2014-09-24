@@ -68,12 +68,17 @@ module.exports = {
       'vendor/angular-ui-router/release/angular-ui-router.js',
       'vendor/angular-ui-utils/modules/route/route.js',
       'vendor/angular-resource/angular-resource.js',
-      'vendor/jquery/jquery.js',
-      'vendor/angular-grid/build/ng-grid.js'
+      'vendor/jquery/dist/jquery.js',
+      'vendor/angular-grid/build/ng-grid.js',
+      'vendor/bootstrap/dist/js/bootstrap.min.js',
     ],
     css: [
     ],
     assets: [
+      'vendor/boostrap/dist/fonts/glyphicons-halflings-regular.eot',
+      'vendor/boostrap/dist/fonts/glyphicons-halflings-regular.svg',
+      'vendor/boostrap/dist/fonts/glyphicons-halflings-regular.ttf',
+      'vendor/boostrap/dist/fonts/glyphicons-halflings-regular.woff'
     ]
   },
 };

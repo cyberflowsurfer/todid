@@ -1,8 +1,4 @@
 <div class="body">
-  <div ng-show="error">
-    <p>Error: {{error}}</p>
-  </div>
-
   <form name="goalForm" ng-submit="submitForm(goalForm.$valid)" novalidate>
     <div class="form-group" ng-class="{ 'has-error' : goalForm.name.$invalid && !goalForm.name.$pristine }">
         <label>Goal Name</label>
@@ -25,6 +21,6 @@
       <button ng-click="submit()" class="btn btn-primary" ng-disabled="goalForm.$invalid">Save</button>
       <button ng-click="cancel()" class="btn btn-danger" >Cancel</button>
     </div>
-
   </form>
+</div>
 

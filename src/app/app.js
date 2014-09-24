@@ -3,10 +3,10 @@ angular.module( 'todid', [
   'templates-common',
   'common.errorHandling',
   'todid.home',
+  'todid.task',
   'todid.about',
   'todid.goal',
-  'ui.state',
-  'ui.route'
+  'ui.router'
 ])
 
 .config( function myAppConfig ( $stateProvider, $urlRouterProvider ) {

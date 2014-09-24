@@ -1,0 +1,37 @@
+<div class="body">
+  <form name="taskForm" ng-submit="submitForm(taskForm.$valid)" novalidate>
+
+    <div class="form-group" ng-class="{ 'has-error' : taskForm.activity.$invalid && !taskForm.activity.$pristine }">
+        <label>Activity</label>
+        <input type="text" name="activity" class="form-control" ng-model="task.activity" required>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error' : taskForm.who.$invalid && !taskForm.who.$pristine }">
+        <label>Activity</label>
+        <input type="text" name="who" class="form-control" ng-model="task.who" required>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error' : taskForm.name.$invalid && !taskForm.name.$pristine }">
+        <label>Task</label>
+        <input type="text" autofocus name="name" class="form-control" ng-model="task.name">
+        <p ng-show="taskForm.name.$invalid && !taskForm.name.$pristine" class="help-block">Name is required.</p>
+        <div field_error errors="error" field="name"></div>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error' : taskForm.minutes.$invalid && !taskForm.minutes.$pristine }">
+        <label>Minutes</label>
+        <input type="text" name="minutes" class="form-control" ng-model="task.minutes" required>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error' : taskForm.description.$invalid && !taskForm.description.$pristine }">
+        <label>Description</label>
+        <input type="number" name="description" class="form-control" ng-model="task.description" required>
+    </div>
+
+
+    <div class="controls">
+      <button ng-click="submit()" class="btn btn-primary" ng-disabled="taskForm.$invalid">Save</button>
+      <button ng-click="cancel()" class="btn btn-danger" >Cancel</button>
+    </div>
+  </form>
+</div>

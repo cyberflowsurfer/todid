@@ -2,7 +2,7 @@
  * Goals module
  */
 angular.module('todid.goal', [
-  'ui.state',
+  'ui.router',
   'ngResource',
   'ngGrid'
 ])

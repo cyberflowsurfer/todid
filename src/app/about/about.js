@@ -1,5 +1,5 @@
 angular.module( 'todid.about', [
-  'ui.state',
+  'ui.router',
   'placeholders',
   'ui.bootstrap'
 ])
