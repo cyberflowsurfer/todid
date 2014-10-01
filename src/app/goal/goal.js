@@ -1,6 +1,18 @@
 /**
  * Goals module
  */
+
+function categoryList(goals) {
+  result = ['All', 'personal', 'work'];
+  /*
+  for (var i = 0; i < goals.length; i++) {
+    result.push(goals[goal].category);
+  }
+  debugger;
+  */
+  return result;
+}
+
 angular.module('todid.goal', [
   'ui.router',
   'ngResource',
@@ -39,18 +51,14 @@ angular.module('todid.goal', [
  * Controller for listing Goals
  */
 .controller( 'GoalsCtrl', function GoalsController( $scope, GoalRes, $state) {
-  $scope.goals = GoalRes.query();
-  $scope.gridOptions = {
-    data: 'goals',
-    columnDefs: [
-      {field: 'category', displayName: 'Category'},
-      {field: 'name', displayName: 'Goal'},
-      {field: 'description', displayName: 'Description'},
-      {displayName: 'Edit', cellTemplate: '<button id="editBtn" type="button" class="btn-small" ng-click="editGoal(row.entity)" >Edit</button> '},
-      {displayName: 'Delete', cellTemplate: '<button id="deleteBtn" type="button" class="btn-small" ng-click="deleteGoal(row.entity)" >Delete</button> '}
-    ],
-    multiSelect: false
+  $scope.alert        = function(text) {
+	alert(text);
   };
+  $scope.goals        = GoalRes.query(function(){
+    $scope.categories = categoryList($scope.goals);
+  });
+  $scope.showCategory = 'All';
+
   $scope.editGoal = function(goal) {
     $state.transitionTo('goal', { goalId: goal.id });
   };
@@ -61,6 +69,12 @@ angular.module('todid.goal', [
   };
   $scope.newGoal = function() {
     $state.transitionTo('goal');
+  };
+  $scope.filterCategory = function(goal) {
+    return ($scope.showCategory == goal.category || $scope.showCategory === 'All');
+  };
+  $scope.setShowCategory = function(category) {
+    $scope.showCategory = category;
   };
 })
 
